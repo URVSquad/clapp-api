@@ -149,3 +149,10 @@ com_crashlytics_export_strings.xml
 crashlytics.properties
 crashlytics-build.properties
 fabric.properties
+
+# package directories
+node_modules
+jspm_packages
+
+# Serverless directories
+.serverless
