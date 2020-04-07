@@ -1,4 +1,4 @@
-const db = require('../util/db'); 
+const db = require('../../util/db'); 
 
 exports.getActivities = async (event, context, callback) => {
     // Run your query
