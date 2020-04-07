@@ -63,15 +63,28 @@ provider:
 #  exclude:
 #    - exclude-me.js
 #    - exclude-me-dir/**
-
 functions:
   activities:
-    handler: src/functions/activities.getActivities
+    handler: src/functions/activities/activities.getActivities
     events:
       - http:
           path: /activities
           method: get
           cors: true
+  createActivity:
+    handler: src/functions/activities/create.create
+    events:
+      - http:
+          path: /activities/create
+          method: post
+          cors: true
+  postSignUp:
+    handler: functions/pool/postsignup.postsignup
+    events:
+      - cognitoUserPool:
+          pool: betogether_users
+          trigger: PostConfirmation
+          existing: true
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
 #    Check the event documentation for details
