@@ -16,3 +16,12 @@ module.exports.hello = async event => {
   // Use this code if you don't use the http event with the LAMBDA-PROXY integration
   // return { message: 'Go Serverless v1.0! Your function executed successfully!', event };
 };
+
+module.exports.test = async function() {
+  let response = await module.exports.hello(null)
+  console.log(`Status code: ${response.statusCode}`)
+  console.log(`Status code: ${response.body}`)
+
+  // Use this code if you don't use the http event with the LAMBDA-PROXY integration
+  // return { message: 'Go Serverless v1.0! Your function executed successfully!', event };
+};

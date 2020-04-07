@@ -1,0 +1,17 @@
+{
+  "name": "betogether-aws",
+  "version": "0.1.0",
+  "description": "",
+  "main": "handler.js",
+  "scripts": {
+    "test": "node -e 'require(\"./handler\").test()'"
+  },
+  "author": "URVSquad",
+  "license": "MIT",
+  "dependencies": {
+    "serverless-mysql": "^1.5.4"
+  },
+  "devDependencies": {
+    "serverless-offline": "^6.1.4"
+  }
+}

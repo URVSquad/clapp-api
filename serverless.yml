@@ -11,7 +11,7 @@
 #
 # Happy Coding!
 
-service: serverless
+service: betogether
 # app and org for use with dashboard.serverless.com
 #app: your-app-name
 #org: your-org-name
@@ -22,7 +22,14 @@ service: serverless
 
 provider:
   name: aws
+  region: eu-west-3
   runtime: nodejs12.x
+  environment:
+    BT_DB_NAME: ${env:BT_DB_NAME}
+    BT_DB_HOST: ${env:BT_DB_HOST}
+    BT_DB_PORT: ${env:BT_DB_PORT}
+    BT_DB_USER: ${env:BT_DB_USER}
+    BT_DB_PASSWORD: ${env:BT_DB_PASSWORD}
 
 # you can overwrite defaults here
 #  stage: dev
@@ -58,8 +65,13 @@ provider:
 #    - exclude-me-dir/**
 
 functions:
-  hello:
-    handler: handler.hello
+  activities:
+    handler: src/functions/activities.getActivities
+    events:
+      - http:
+          path: /activities
+          method: get
+          cors: true
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
 #    Check the event documentation for details
@@ -97,8 +109,6 @@ functions:
 #            path: /hello
 
 #    Define function environment variables here
-#    environment:
-#      variable2: value2
 
 # you can add CloudFormation resource templates here
 #resources:
@@ -111,3 +121,6 @@ functions:
 #     NewOutput:
 #       Description: "Description for the output"
 #       Value: "Some output value"
+
+plugins:
+  - serverless-offline

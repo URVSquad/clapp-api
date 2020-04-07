@@ -156,3 +156,6 @@ jspm_packages
 
 # Serverless directories
 .serverless
+
+# Ignore any zip files
+*.zip
