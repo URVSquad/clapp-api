@@ -79,12 +79,19 @@ functions:
           method: post
           cors: true
   postSignUp:
-    handler: functions/pool/postsignup.postsignup
+    handler: src/functions/pool/postsignup.postsignup
     events:
       - cognitoUserPool:
           pool: betogether_users
           trigger: PostConfirmation
           existing: true
+  createUser:
+    handler: src/functions/users/create-user.createUser
+    events:
+      - http:
+          path: /users/create
+          method: post
+          cors: true
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
 #    Check the event documentation for details

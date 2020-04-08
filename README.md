@@ -26,3 +26,9 @@ curl 'curl http://localhost:3000/dev/activities'
 ```bash
 curl 'http://localhost:3000/dev/activities/create' --data '{"title":"Title", "image":"base64", "description":"Description", "category":"1", "app_user":"1234"}'
 ```
+
+- POST `/users/create`
+
+```bash
+curl 'http://localhost:3000/dev/users/create' --data '{"title":"Title", "image":"base64", "description":"Description", "category":"1", "app_user":"1234"}'
+```
