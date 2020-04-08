@@ -1,13 +1,23 @@
 const db = require('../../util/db'); 
 
 exports.getActivities = async (event, context, callback) => {
-    // Run your query
-    const results = await db.query('SELECT * FROM item');
+    let sql = 'SELECT * FROM item'
 
-    // Run clean up function
-    await db.end();
+    let response = {}
+
+    try {
+        let results = await db.query(sql);
+        await db.end();
+
+        response.status = 200
+        response.activities = results
+    }
+    catch(err) {
+        response.status = 500
+    }
+
     return {
-        'statusCode': 200,
-        'body': JSON.stringify(results)
+        'statusCode': response.status,
+        'body': JSON.stringify(response)
     };
 };
