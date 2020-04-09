@@ -2,7 +2,12 @@ const db = require('../../util/db');
 
 exports.getActivities = async (event, context, callback) => {
     var response = {}
-    var sql = 'SELECT * FROM item'
+    var sql = `
+        SELECT *
+        FROM item
+        INNER JOIN activity
+        ON item.id = activity.id;
+    `
 
     try {
         var results = await db.query(sql);
@@ -28,8 +33,13 @@ exports.postActivity = async (event, context, callback) => {
     var request = JSON.parse(event.body)
     var response = {}
 
-    var sqlItem = 'INSERT INTO item (id, title, image, description, category, app_user, creation) VALUES(DEFAULT, ?, ?, ?, ?, ?, ?)'
-    var sqlActivity = 'INSERT INTO activity(id) VALUES (?)'
+    var sqlItem = `
+        INSERT INTO item(id, title, image, description, category, app_user, creation) 
+        VALUES(DEFAULT, ?, ?, ?, ?, ?, ?)
+    `
+    var sqlActivity = `
+        INSERT INTO activity(id) VALUES (?)
+    `
 
     try {
         var results = await db.transaction()
