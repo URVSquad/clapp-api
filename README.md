@@ -1,4 +1,24 @@
 # BeTogether AWS
+This project uses the [Serverless Framework](https://github.com/serverless/serverless) to define an Serverless API in AWS.
+
+## Requirements
+To run this project you'll need to setup the following environment variables in your system:
+
+- `BT_DB_NAME` 
+- `BT_DB_HOST`
+- `BT_DB_PORT` 
+- `BT_DB_USER` 
+- `BT_DB_PASSWORD` 
+
+
+## How to run
+Once you clone this project locally you can run it offline by doing:
+``` 
+npm install
+serverless offline
+```
+
+Then, you'll be able to curl the following endpoints in your local machine.
 
 ## Endpoints
 GET `/activities`
