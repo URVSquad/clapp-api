@@ -1,7 +1,6 @@
 # BeTogether AWS
 
 ## Endpoints
-### Get Activity
 GET `/activities`
 
 ```bash
@@ -24,8 +23,8 @@ curl -X GET 'http://localhost:3000/dev/activities'
   ]
 }
 ```
-### Create Activity
-- POST `/activities`
+
+POST `/activities`
 
 ```bash
 curl -X POST 'http://localhost:3000/dev/activities' --data '{"title":"Title", "image":"base64", "description":"Description", "category":"1", "app_user":"1234"}'
@@ -43,6 +42,18 @@ curl -X POST 'http://localhost:3000/dev/activities' --data '{"title":"Title", "i
     "app_user": "1234",
     "id": 15
   }
+}
+```
+
+GET `/events/`
+```bash
+curl -X GET http://localhost:3000/dev/events
+```
+
+```json
+{
+  "status": 200,
+  "events": []
 }
 ```
 
