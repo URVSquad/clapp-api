@@ -4,7 +4,7 @@
 - GET `/activity`
 
 ```bash
-curl 'curl http://localhost:3000/dev/activities'
+curl -X GET 'curl http://localhost:3000/dev/activities'
 ```
 
 ```json
@@ -24,7 +24,7 @@ curl 'curl http://localhost:3000/dev/activities'
 - POST `/activities/create`
 
 ```bash
-curl 'http://localhost:3000/dev/activities/create' --data '{"title":"Title", "image":"base64", "description":"Description", "category":"1", "app_user":"1234"}'
+curl -X POST 'http://localhost:3000/dev/activities' --data '{"title":"Title", "image":"base64", "description":"Description", "category":"1", "app_user":"1234"}'
 ```
 
 - POST `/users/create`

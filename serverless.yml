@@ -64,18 +64,18 @@ provider:
 #    - exclude-me.js
 #    - exclude-me-dir/**
 functions:
-  activities:
+  getActivity:
     handler: src/functions/activities/activities.getActivities
     events:
       - http:
           path: /activities
           method: get
           cors: true
-  createActivity:
-    handler: src/functions/activities/create.create
+  postActivity:
+    handler: src/functions/activities/activities.postActivity
     events:
       - http:
-          path: /activities/create
+          path: /activities/
           method: post
           cors: true
   postSignUp:
