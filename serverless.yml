@@ -85,6 +85,13 @@ functions:
           path: /events/
           method: get
           cors: true
+  postEvent:
+    handler: src/functions/events/events.postEvent
+    events:
+      - http:
+          path: /events/
+          method: post
+          cors: true
   postSignUp:
     handler: src/functions/pool/postsignup.postsignup
     events:

@@ -53,7 +53,51 @@ curl -X GET http://localhost:3000/dev/events
 ```json
 {
   "status": 200,
-  "events": []
+  "events": [
+    {
+      "id": 24,
+      "title": "Title",
+      "image": {
+        "type": "Buffer",
+        "data": [
+          98,
+          97,
+          115,
+          101,
+          54,
+          52
+        ]
+      },
+      "description": "Description",
+      "category": 1,
+      "app_user": "1234",
+      "creation": "2020-04-09T08:16:00.000Z",
+      "event_start": "0000-00-00 00:00:00",
+      "event_end": "0000-00-00 00:00:00"
+    }
+  ]
+}
+```
+
+POST `/events`
+
+```bash
+curl -X POST 'http://localhost:3000/dev/events' --data '{"title":"Title", "image":"base64", "description":"Description", "category":"1", "app_user":"1234", "event_start":"2020-04-09 09:08:49", "event_end":"2020-04-09 15:08:49"}'
+```
+
+```json
+{
+  "status": 200,
+  "event": {
+    "title": "Title",
+    "image": "base64",
+    "description": "Description",
+    "category": "1",
+    "app_user": "1234",
+    "event_start": "2020-04-09 09:08:49",
+    "event_end": "2020-04-09 15:08:49",
+    "id": 25
+  }
 }
 ```
 
