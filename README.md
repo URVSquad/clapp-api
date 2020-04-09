@@ -18,7 +18,7 @@ curl -X GET 'http://localhost:3000/dev/activities'
       "description": "This is the description",
       "category": 1,
       "app_user": "1234",
-      "creation": null
+      "creation": "2020-04-09T07:19:29.000Z"
     }
   ]
 }

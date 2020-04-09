@@ -49,6 +49,7 @@ exports.postActivity = async (event, context, callback) => {
         await db.end();
         
         request.id = results[0].insertId
+        request.creation = datetime
 
         response.status = 200
         response.activity = request
