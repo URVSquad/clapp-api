@@ -22,7 +22,7 @@ service: betogether
 
 provider:
   name: aws
-  region: eu-west-3
+  region: eu-west-2
   runtime: nodejs12.x
   environment:
     BT_DB_NAME: ${env:BT_DB_NAME}
@@ -78,6 +78,8 @@ functions:
           path: /activities/
           method: post
           cors: true
+          authorizer:
+            arn: arn:aws:cognito-idp:eu-west-2:362908361943:userpool/eu-west-2_G1chdG3tq
   getEvents:
     handler: src/functions/events/events.getEvents
     events:
@@ -92,6 +94,8 @@ functions:
           path: /events/
           method: post
           cors: true
+          authorizer:
+            arn: arn:aws:cognito-idp:eu-west-2:362908361943:userpool/eu-west-2_G1chdG3tq
   postSignUp:
     handler: src/functions/pool/postsignup.postsignup
     events:
@@ -99,13 +103,6 @@ functions:
           pool: betogether_users
           trigger: PostConfirmation
           existing: true
-  createUser:
-    handler: src/functions/users/create-user.createUser
-    events:
-      - http:
-          path: /users/create
-          method: post
-          cors: true
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
 #    Check the event documentation for details
