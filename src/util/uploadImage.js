@@ -1,3 +1,4 @@
+const sha1 = require('sha1');
 const AWS = require('aws-sdk');
 const s3 = new AWS.S3();
 
@@ -8,10 +9,11 @@ module.exports = async (encodedImage) => {
 
 	try {
 		var decodedImage = Buffer.from(encodedImage, 'base64');
+		var hash = `${sha1(encodedImage)}.png`;
 		
 		s3.upload({
 			Bucket: 'betogether-images',
-			Key: key,
+			Key: hash,
 			Body: decodedImage
 		}, function(err, data) {
 			if (!err) response.url = data.Location

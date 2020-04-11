@@ -55,6 +55,7 @@ exports.postActivity = async (event, context, callback) => {
     } else {
         request.image_url = null
     }
+    delete request.image;
  
     try {
         var results = await db.transaction()
