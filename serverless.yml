@@ -22,7 +22,7 @@ service: betogether
 
 provider:
   name: aws
-  region: eu-west-3
+  region: eu-west-2
   runtime: nodejs12.x
   environment:
     BT_DB_NAME: ${env:BT_DB_NAME}
@@ -69,6 +69,13 @@ functions:
     events:
       - http:
           path: /activities
+          method: get
+          cors: true
+  getActivivity:
+    handler: src/functions/activities/activities.getActivity
+    events:
+      - http:
+          path: /activity
           method: get
           cors: true
   postActivity:
