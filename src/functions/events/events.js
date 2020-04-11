@@ -4,16 +4,16 @@ const uploadImage = require('../../util/uploadImage');
 exports.getEvents = async (event, context, callback) => {
     var response = {}
     var sql = `
-        SELECT *
-        FROM item
-        INNER JOIN event
-        ON item.id = event.id
-        INNER JOIN category on item.category = category.id
-        LEFT JOIN (
-            SELECT item, COUNT(*) as total
-            FROM vote
-            WHERE voted IS TRUE
-            GROUP BY item) votes ON item.id = votes.item;
+      SELECT item.id, item.title, item.description, item.app_user, item.creation, IFNULL(votes.total, 0) as votes, category.category, event.event_start, event.event_end
+      FROM item
+      INNER JOIN event
+      ON item.id = event.id
+      INNER JOIN category on item.category = category.id
+      LEFT JOIN (
+          SELECT item, COUNT(*) as total
+          FROM vote
+          WHERE voted IS TRUE
+          GROUP BY item) votes ON item.id = votes.item;
     `
 
     try {
