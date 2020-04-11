@@ -1,4 +1,5 @@
 const db = require('../../util/db');
+const uploadImage = require('../../util/uploadImage'); 
 
 exports.getEvents = async (event, context, callback) => {
     var response = {}
@@ -48,11 +49,17 @@ exports.postEvent = async (event, context, callback) => {
     VALUES(?, ?, ?)
   `
 
-  console.log(request)
+  var imageResponse = await uploadImage(request.image)
+  if (imageResponse.url) {
+      request.image_url = imageResponse.url
+  } else {
+      request.image_url = null
+  }
+  delete request.image;
 
   try {
     var results = await db.transaction()
-      .query(sqlItem, [request.title, request.image, request.description, request.category, request.app_user, datetime])
+      .query(sqlItem, [request.title, request.image_url, request.description, request.category, request.app_user, datetime])
       .query((r) => [sqlEvent, [r.insertId, request.event_start, request.event_end]])
       .commit();
     await db.end();

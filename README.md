@@ -83,7 +83,7 @@ curl -X POST 'http://localhost:3000/dev/activities' --data '{"title":"Title", "i
   "status": 200,
   "activity": {
     "title": "Title",
-    "image": "base64",
+    "image_url": "http://example.com",
     "description": "Description",
     "category": "1",
     "app_user": "1234",
@@ -139,7 +139,7 @@ curl -X POST 'http://localhost:3000/dev/events' --data '{"title":"Title", "image
   "status": 200,
   "event": {
     "title": "Title",
-    "image": "base64",
+    "image_url": "http://example.com",
     "description": "Description",
     "category": "1",
     "app_user": "1234",

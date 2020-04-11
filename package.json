@@ -9,7 +9,10 @@
   "author": "URVSquad",
   "license": "MIT",
   "dependencies": {
-    "serverless-mysql": "^1.5.4"
+    "aws-sdk": "^2.656.0",
+    "node-fetch": "^2.6.0",
+    "serverless-mysql": "^1.5.4",
+    "sha1": "^1.1.1"
   },
   "devDependencies": {
     "serverless-offline": "^6.1.4"
