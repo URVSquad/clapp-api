@@ -50,8 +50,8 @@ exports.postActivity = async (event, context, callback) => {
     `
 
     var imageResponse = await uploadImage(request.image)
-    if (imageResponse.body) {
-        request.image_url = imageResponse.body.url
+    if (imageResponse.url) {
+        request.image_url = imageResponse.url
     } else {
         request.image_url = null
     }

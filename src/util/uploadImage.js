@@ -9,23 +9,19 @@ module.exports = async (encodedImage) => {
 
 	try {
 		var decodedImage = Buffer.from(encodedImage, 'base64');
-		var hash = `${sha1(encodedImage)}.png`;
+		var objectKey = `${sha1(encodedImage)}.png`;
 		
-		s3.upload({
+		await s3.putObject({
 			Bucket: 'betogether-images',
-			Key: hash,
+			Key: objectKey,
 			Body: decodedImage
-		}, function(err, data) {
-			if (!err) response.url = data.Location
-			else throw err
-		})
+		}).promise()
+
+		response.url = `https://betogether-images.s3.eu-west-2.amazonaws.com/${objectKey}`
 
 	} catch(err) {
 		response.status = 500
 	}
 
-	return {
-			'statusCode': response.status,
-			'body': JSON.stringify(response)
-	};
+	return response;
 };
