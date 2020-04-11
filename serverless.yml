@@ -71,6 +71,13 @@ functions:
           path: /activities
           method: get
           cors: true
+  getActivivity:
+    handler: src/functions/activities/activities.getActivity
+    events:
+      - http:
+          path: /activity
+          method: get
+          cors: true
   postActivity:
     handler: src/functions/activities/activities.postActivity
     events:

@@ -3,10 +3,16 @@ const db = require('../../util/db');
 exports.getActivities = async (event, context, callback) => {
     var response = {}
     var sql = `
-        SELECT *
+        SELECT item.id, item.title, item.description, item.app_user, item.creation, IFNULL(votes.total, 0) as votes, category.category
         FROM item
         INNER JOIN activity
-        ON item.id = activity.id;
+        ON item.id = activity.id
+        INNER JOIN category on item.category = category.id
+        LEFT JOIN (
+            SELECT item, COUNT(*) as total
+            FROM vote
+            WHERE voted IS TRUE
+            GROUP BY item) votes ON item.id = votes.item;
     `
 
     try {
@@ -15,6 +21,40 @@ exports.getActivities = async (event, context, callback) => {
 
         response.status = 200
         response.activities = results
+    }
+    catch(err) {
+        response.status = 500
+    }
+
+    return {
+        'statusCode': response.status,
+        'body': JSON.stringify(response)
+    };
+};
+
+exports.getActivity = async (event, context, callback) => {
+    var response = {}
+    var sql = `
+        SELECT item.id, item.title, item.description, item.app_user, item.creation, IFNULL(votes.total, 0) as votes, category.category
+        FROM item
+        
+        INNER JOIN activity
+        ON item.id = activity.id
+        INNER JOIN category on item.category = category.id
+        LEFT JOIN (
+            SELECT item, COUNT(*) as total
+            FROM vote
+            WHERE voted IS TRUE
+            GROUP BY item) votes ON item.id = votes.item
+        WHERE item.id = 8;
+    `
+
+    try {
+        var results = await db.query(sql);
+        await db.end();
+
+        response.status = 200
+        response.activities = results[0]
     }
     catch(err) {
         response.status = 500
