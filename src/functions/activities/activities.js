@@ -103,3 +103,19 @@ exports.postActivity = async (event, context, callback) => {
         'body': JSON.stringify(response)
     };
 };
+
+exports.postImage = async (event, context, callback) => {
+    var response = {}
+    var datetime = new Date().toISOString().slice(0, 19).replace('T', ' ');
+
+    var request = JSON.parse(event.body)
+    var response = {
+        status: 200
+    }
+
+    
+    return {
+        'statusCode': response.status,
+        'body': JSON.stringify(response)
+    };
+};

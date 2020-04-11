@@ -103,6 +103,13 @@ functions:
           cors: true
           authorizer:
             arn: arn:aws:cognito-idp:eu-west-2:362908361943:userpool/eu-west-2_G1chdG3tq
+  postImage:
+    handler: src/functions/images/images.postImage
+    events:
+      - http:
+          path: /image/
+          method: post
+          cors: true
   postSignUp:
     handler: src/functions/pool/postsignup.postsignup
     events:
