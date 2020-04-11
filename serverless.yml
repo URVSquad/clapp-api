@@ -45,10 +45,10 @@ functions:
           authorizer:
             arn: arn:aws:cognito-idp:eu-west-2:362908361943:userpool/eu-west-2_G1chdG3tq
   postSignUp:
-    handler: src/functions/pool/postsignup.postsignup
+    handler: src/functions/pool/post-signup.postsignup
     events:
       - cognitoUserPool:
-          pool: betogether_users
+          pool: clapp_user_pool
           trigger: PostConfirmation
           existing: true
 
