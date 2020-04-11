@@ -6,7 +6,13 @@ exports.getEvents = async (event, context, callback) => {
         SELECT *
         FROM item
         INNER JOIN event
-        ON item.id = event.id;
+        ON item.id = event.id
+        INNER JOIN category on item.category = category.id
+        LEFT JOIN (
+            SELECT item, COUNT(*) as total
+            FROM vote
+            WHERE voted IS TRUE
+            GROUP BY item) votes ON item.id = votes.item;
     `
 
     try {
