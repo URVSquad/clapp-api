@@ -34,6 +34,40 @@ exports.getActivities = async (event, context, callback) => {
     };
 };
 
+
+exports.getActivitiesByCategory = async (event, context, callback) => {
+    var response = {}
+    var sql = `
+        SELECT item.id, item.title, item.description, item.app_user, item.creation, IFNULL(votes.total, 0) as votes, category.category, item.image, item.url
+        FROM item
+        INNER JOIN activity
+        ON item.id = activity.id
+        INNER JOIN category on item.category = category.id
+        LEFT JOIN (
+            SELECT item, COUNT(*) as total
+            FROM vote
+            WHERE voted IS TRUE
+            GROUP BY item) votes ON item.id = votes.item;
+    `
+
+    try {
+        var results = await db.query(sql);
+        await db.end();
+
+        response.status = 200
+        response.activities = results
+    }
+    catch(err) {
+        response.status = 500
+    }
+
+    return {
+        'statusCode': response.status,
+        'body': JSON.stringify(response)
+    };
+};
+
+
 exports.postActivity = async (event, context, callback) => {
     var response = {}
     var datetime = new Date().toISOString().slice(0, 19).replace('T', ' ');
