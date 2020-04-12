@@ -162,8 +162,8 @@ exports.postActivity = async (event, context, callback) => {
     var response = {}
 
     var sqlItem = `
-        INSERT INTO item(id, title, image, description, category, app_user, creation) 
-        VALUES(DEFAULT, ?, ?, ?, ?, ?, ?)
+        INSERT INTO item(id, title, image, description, category, app_user, creation, url) 
+        VALUES(DEFAULT, ?, ?, ?, ?, ?, ?, ?)
     `
     var sqlActivity = `
         INSERT INTO activity(id) VALUES (?)
@@ -182,7 +182,7 @@ exports.postActivity = async (event, context, callback) => {
  
     try {
         var results = await db.transaction()
-            .query(sqlItem, [request.title, request.image_url, request.description, categoryId[request.category], request.user, datetime])
+            .query(sqlItem, [request.title, request.image_url, request.description, categoryId[request.category], request.user, datetime, request.url])
             .query((r) => [sqlActivity, r.insertId])
             .commit();
         await db.end();
