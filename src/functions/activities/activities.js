@@ -36,6 +36,8 @@ exports.getActivities = async (event, context, callback) => {
 
 
 exports.getActivitiesByCategory = async (event, context, callback) => {
+    console.log(event.queryStringParameters.category)
+
     var response = {}
     var sql = `
         SELECT item.id, item.title, item.description, item.app_user, item.creation, IFNULL(votes.total, 0) as votes, category.category, item.image, item.url
@@ -47,11 +49,12 @@ exports.getActivitiesByCategory = async (event, context, callback) => {
             SELECT item, COUNT(*) as total
             FROM vote
             WHERE voted IS TRUE
-            GROUP BY item) votes ON item.id = votes.item;
+            GROUP BY item) votes ON item.id = votes.item
+        WHERE category.category = (?);
     `
 
     try {
-        var results = await db.query(sql);
+        var results = await db.query(sql, [event.queryStringParameters.category]);
         await db.end();
 
         response.status = 200

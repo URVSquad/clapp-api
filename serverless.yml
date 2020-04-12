@@ -27,17 +27,7 @@ functions:
           method: post
           cors: true
           authorizer:
-            arn: arn:aws:cognito-idp:eu-west-2:362908361943:userpool/eu-west-2_G1chdG3tq
-  getActivitiesByCategory:
-    handler: src/functions/activities/activities.getActivitiesByCategory
-    events:
-    - http:
-      path: /activities/{id}
-      method: get
-      request:
-        parameters:
-          paths:
-            id: true
+            arn: arn:aws:cognito-idp:eu-west-2:362908361943:userpool/eu-west-2_G1chdG3tq=
   getEvents:
     handler: src/functions/events/events.getEvents
     events:
@@ -61,6 +51,17 @@ functions:
           pool: clapp_user_pool
           trigger: PostConfirmation
           existing: true
+  getActivitiesByCategory:
+    handler: src/functions/activities/activities.getActivitiesByCategory
+    events:
+      - http:
+          path: /activities/category
+          method: get
+          cors: true
+          request:
+            parameters:
+              querystrings:
+                category: true
 
 plugins:
   - serverless-offline
