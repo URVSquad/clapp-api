@@ -20,6 +20,7 @@ module.exports = async (encodedImage) => {
 		response.url = `https://betogether-images.s3.eu-west-2.amazonaws.com/${objectKey}`
 
 	} catch(err) {
+		console.log(err)
 		response.status = 500
 	}
 
