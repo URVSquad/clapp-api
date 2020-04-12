@@ -29,6 +29,7 @@ exports.getEvents = async (event, context, callback) => {
 
     return {
         'statusCode': response.status,
+        'headers': {"content-type":"application/json; charset=utf-8", 'Access-Control-Allow-Origin': '*'},
         'body': JSON.stringify(response)
     };
 };
@@ -63,6 +64,7 @@ exports.getEventsByCategory = async (event, context, callback) => {
 
   return {
       'statusCode': response.status,
+      'headers': {"content-type":"application/json; charset=utf-8", 'Access-Control-Allow-Origin': '*'},
       'body': JSON.stringify(response)
   };
 };
@@ -97,6 +99,7 @@ exports.getEventsByUser = async (event, context, callback) => {
 
   return {
       'statusCode': response.status,
+      'headers': {"content-type":"application/json; charset=utf-8", 'Access-Control-Allow-Origin': '*'},
       'body': JSON.stringify(response)
   };
 };
@@ -156,6 +159,7 @@ exports.postEvent = async (event, context, callback) => {
 
   return {
     'statusCode': response.status,
+    'headers': {"content-type":"application/json; charset=utf-8", 'Access-Control-Allow-Origin': '*'},
     'body': JSON.stringify(response)
   };
 };
@@ -182,6 +186,7 @@ exports.postVote = async (event, context, callback) => {
 
   return {
       'statusCode': response.status,
+      'headers': {"content-type":"application/json; charset=utf-8", 'Access-Control-Allow-Origin': '*' },
       'body': JSON.stringify(response)
   };
 };
