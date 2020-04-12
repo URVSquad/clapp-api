@@ -62,6 +62,18 @@ functions:
             parameters:
               querystrings:
                 category: true
+  getActivitiesByUser:
+    handler: src/functions/activities/activities.getActivitiesByUser
+    events:
+      - http:
+          path: /activities/category
+          method: get
+          cors: true
+          request:
+            parameters:
+              querystrings:
+                user: true
+              
 
 plugins:
   - serverless-offline
