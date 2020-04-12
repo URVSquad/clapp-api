@@ -5,7 +5,7 @@ const uploadImage = require('../../util/uploadImage');
 exports.getActivities = async (event, context, callback) => {
     var response = {}
     var sql = `
-        SELECT item.id, item.title, item.description, item.app_user, item.creation, IFNULL(votes.total, 0) as votes, category.category, item.image, item.url
+        SELECT item.id, item.title, item.description, item.app_user, item.creation, item.votes, category.category, item.image, item.url
         FROM item
         INNER JOIN activity
         ON item.id = activity.id
@@ -40,7 +40,7 @@ exports.getActivitiesByCategory = async (event, context, callback) => {
 
     var response = {}
     var sql = `
-        SELECT item.id, item.title, item.description, item.app_user, item.creation, IFNULL(votes.total, 0) as votes, category.category, item.image, item.url
+        SELECT item.id, item.title, item.description, item.app_user, item.creation, item.votes, category.category, item.image, item.url
         FROM item
         INNER JOIN activity
         ON item.id = activity.id
@@ -76,7 +76,7 @@ exports.getActivitiesByUser = async (event, context, callback) => {
 
     var response = {}
     var sql = `
-        SELECT item.id, item.title, item.description, item.app_user, item.creation, IFNULL(votes.total, 0) as votes, category.category, item.image, item.url
+        SELECT item.id, item.title, item.description, item.app_user, item.creation, item.votes, category.category, item.image, item.url
         FROM item
         INNER JOIN activity
         ON item.id = activity.id
@@ -111,7 +111,7 @@ exports.getActivitiesByUser = async (event, context, callback) => {
 
     var response = {}
     var sql = `
-        SELECT item.id, item.title, item.description, item.app_user, item.creation, IFNULL(votes.total, 0) as votes, category.category, item.image, item.url
+        SELECT item.id, item.title, item.description, item.app_user, item.creation, item.votes, category.category, item.image, item.url
         FROM item
         INNER JOIN activity
         ON item.id = activity.id
@@ -150,12 +150,13 @@ exports.postActivity = async (event, context, callback) => {
     console.log(request)
 
     var categoryId = {
-        'activityCategories.Ejercicio': 3,
-        'activityCategories.Recetas': 3,
-        'activityCategories.Audiovisual': 3,
-        'activityCategories.Libros': 3,
-        'activityCategories.Juegos': 3,
-        'activityCategories.Peques': 3,
+        'Podcast': 3,
+        'Ejercicio': 3,
+        'Recetas': 3,
+        'Audiovisual': 3,
+        'Libros': 3,
+        'Juegos': 3,
+        'Peques': 3
     }
 
     var response = {}
@@ -197,6 +198,39 @@ exports.postActivity = async (event, context, callback) => {
         response.status = 500
     }
         
+    return {
+        'statusCode': response.status,
+        'body': JSON.stringify(response)
+    };
+};
+
+
+exports.postVote = async (event, context, callback) => {
+    var response = {}
+    var sql = `
+        SELECT item.id, item.title
+        FROM item
+        INNER JOIN activity
+        ON item.id = activity.id
+        INNER JOIN category on item.category = category.id
+        LEFT JOIN (
+            SELECT item, COUNT(*) as total
+            FROM vote
+            WHERE voted IS TRUE
+            GROUP BY item) votes ON item.id = votes.item;
+    `
+
+    try {
+        var results = await db.query(sql);
+        await db.end();
+
+        response.status = 200
+        response.activities = results
+    }
+    catch(err) {
+        response.status = 500
+    }
+
     return {
         'statusCode': response.status,
         'body': JSON.stringify(response)

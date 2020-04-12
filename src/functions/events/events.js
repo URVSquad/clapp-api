@@ -4,7 +4,7 @@ const uploadImage = require('../../util/uploadImage');
 exports.getEvents = async (event, context, callback) => {
     var response = {}
     var sql = `
-      SELECT item.id, item.title, item.description, item.app_user, item.creation, IFNULL(votes.total, 0) as votes, category.category, event.event_start, event.event_end, item.image, item.url, event.hashtag
+      SELECT item.id, item.title, item.description, item.app_user, item.creation, item.votes, category.category, event.event_start, event.event_end, item.image, item.url, event.hashtag
       FROM item
       INNER JOIN event
       ON item.id = event.id
@@ -37,7 +37,7 @@ exports.getEventsByCategory = async (event, context, callback) => {
   console.log(event.queryStringParameters.category)
   var response = {}
   var sql = `
-    SELECT item.id, item.title, item.description, item.app_user, item.creation, IFNULL(votes.total, 0) as votes, category.category, event.event_start, event.event_end, item.image, item.url, event.hashtag
+    SELECT item.id, item.title, item.description, item.app_user, item.creation, item.votes, category.category, event.event_start, event.event_end, item.image, item.url, event.hashtag
     FROM item
     INNER JOIN event
     ON item.id = event.id
@@ -71,7 +71,7 @@ exports.getEventsByUser = async (event, context, callback) => {
   console.log(event.queryStringParameters.category)
   var response = {}
   var sql = `
-    SELECT item.id, item.title, item.description, item.app_user, item.creation, IFNULL(votes.total, 0) as votes, category.category, event.event_start, event.event_end, item.image, item.url, event.hashtag
+    SELECT item.id, item.title, item.description, item.app_user, item.creation, item.votes, category.category, event.event_start, event.event_end, item.image, item.url, event.hashtag
     FROM item
     INNER JOIN event
     ON item.id = event.id
@@ -109,20 +109,19 @@ exports.postEvent = async (event, context, callback) => {
   var response = {}
 
   var categoryId = {
-    'eventCategories.Ejercicio': 3,
-    'activityCategories.Cocinitas': 3,
-    'activityCategories.Cultura': 3,
-    'activityCategories.Peques': 3,
-    'activityCategories.Fiesta': 3,
-    'activityCategories.Otros': 3
-}
+    'Ejercicio': 3,
+    'Cultura': 3,
+    'Otros': 3,
+    'Peques': 3,
+    'Fiesta': 3
+  }
 
   var sqlItem = `
     INSERT INTO item(id, title, image, description, category, app_user, creation)
     VALUES(DEFAULT, ?, ?, ?, ?, ?, ?)
   `
   var sqlEvent = `
-    INSERT INTO event(id, event_start, event_end, hashtag) 
+    INSERT INTO event(i,d event_start, event_end, hashtag) 
     VALUES(?, ?, ?, ?)
   `
 
@@ -157,5 +156,31 @@ exports.postEvent = async (event, context, callback) => {
   return {
     'statusCode': response.status,
     'body': JSON.stringify(response)
+  };
+};
+
+exports.postVote = async (event, context, callback) => {
+  var response = {}
+  var sql = `
+    UPDATE item
+    SET votes = votes + 1
+    WHERE item.id = (?);
+  `
+
+  try {
+      var results = await db.query(sql, [event.pathParameters['id']]);
+      await db.end();
+
+      response.status = 200
+      response.activities = results
+  }
+  catch(err) {
+    console.log(err)
+    response.status = 500
+  }
+
+  return {
+      'statusCode': response.status,
+      'body': JSON.stringify(response)
   };
 };
