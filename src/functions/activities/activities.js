@@ -5,7 +5,7 @@ const uploadImage = require('../../util/uploadImage');
 exports.getActivities = async (event, context, callback) => {
     var response = {}
     var sql = `
-        SELECT item.id, item.title, item.description, item.app_user, item.creation, IFNULL(votes.total, 0) as votes, category.category, item.image, item.url
+        SELECT item.id, item.title, item.description, item.app_user, item.creation, item.votes, category.category, item.image, item.url
         FROM item
         INNER JOIN activity
         ON item.id = activity.id
@@ -40,7 +40,7 @@ exports.getActivitiesByCategory = async (event, context, callback) => {
 
     var response = {}
     var sql = `
-        SELECT item.id, item.title, item.description, item.app_user, item.creation, IFNULL(votes.total, 0) as votes, category.category, item.image, item.url
+        SELECT item.id, item.title, item.description, item.app_user, item.creation, item.votes, category.category, item.image, item.url
         FROM item
         INNER JOIN activity
         ON item.id = activity.id
@@ -76,7 +76,7 @@ exports.getActivitiesByUser = async (event, context, callback) => {
 
     var response = {}
     var sql = `
-        SELECT item.id, item.title, item.description, item.app_user, item.creation, IFNULL(votes.total, 0) as votes, category.category, item.image, item.url
+        SELECT item.id, item.title, item.description, item.app_user, item.creation, item.votes, category.category, item.image, item.url
         FROM item
         INNER JOIN activity
         ON item.id = activity.id
@@ -111,7 +111,7 @@ exports.getActivitiesByUser = async (event, context, callback) => {
 
     var response = {}
     var sql = `
-        SELECT item.id, item.title, item.description, item.app_user, item.creation, IFNULL(votes.total, 0) as votes, category.category, item.image, item.url
+        SELECT item.id, item.title, item.description, item.app_user, item.creation, item.votes, category.category, item.image, item.url
         FROM item
         INNER JOIN activity
         ON item.id = activity.id

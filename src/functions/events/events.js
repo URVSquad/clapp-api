@@ -4,7 +4,7 @@ const uploadImage = require('../../util/uploadImage');
 exports.getEvents = async (event, context, callback) => {
     var response = {}
     var sql = `
-      SELECT item.id, item.title, item.description, item.app_user, item.creation, IFNULL(votes.total, 0) as votes, category.category, event.event_start, event.event_end, item.image, item.url, event.hashtag
+      SELECT item.id, item.title, item.description, item.app_user, item.creation, item.votes, category.category, event.event_start, event.event_end, item.image, item.url, event.hashtag
       FROM item
       INNER JOIN event
       ON item.id = event.id
@@ -37,7 +37,7 @@ exports.getEventsByCategory = async (event, context, callback) => {
   console.log(event.queryStringParameters.category)
   var response = {}
   var sql = `
-    SELECT item.id, item.title, item.description, item.app_user, item.creation, IFNULL(votes.total, 0) as votes, category.category, event.event_start, event.event_end, item.image, item.url, event.hashtag
+    SELECT item.id, item.title, item.description, item.app_user, item.creation, item.votes, category.category, event.event_start, event.event_end, item.image, item.url, event.hashtag
     FROM item
     INNER JOIN event
     ON item.id = event.id
@@ -71,7 +71,7 @@ exports.getEventsByUser = async (event, context, callback) => {
   console.log(event.queryStringParameters.category)
   var response = {}
   var sql = `
-    SELECT item.id, item.title, item.description, item.app_user, item.creation, IFNULL(votes.total, 0) as votes, category.category, event.event_start, event.event_end, item.image, item.url, event.hashtag
+    SELECT item.id, item.title, item.description, item.app_user, item.creation, item.votes, category.category, event.event_start, event.event_end, item.image, item.url, event.hashtag
     FROM item
     INNER JOIN event
     ON item.id = event.id
