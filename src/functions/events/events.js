@@ -111,10 +111,10 @@ exports.postEvent = async (event, context, callback) => {
 
   var categoryId = {
     'Ejercicio': 3,
-    'Cultura': 3,
-    'Otros': 3,
-    'Peques': 3,
-    'Fiesta': 3
+    'Cultura': 4,
+    'Otros': 5,
+    'Peques': 6,
+    'Fiesta': 7
   }
 
   var sqlItem = `
@@ -122,7 +122,7 @@ exports.postEvent = async (event, context, callback) => {
     VALUES(DEFAULT, ?, ?, ?, ?, ?, ?)
   `
   var sqlEvent = `
-    INSERT INTO event(i,d event_start, event_end, hashtag) 
+    INSERT INTO event(id, event_start, event_end, hashtag) 
     VALUES(?, ?, ?, ?)
   `
 

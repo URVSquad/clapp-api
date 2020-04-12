@@ -150,13 +150,13 @@ exports.postActivity = async (event, context, callback) => {
     console.log(request)
 
     var categoryId = {
-        'Podcast': 3,
+        'Podcast': 12,
         'Ejercicio': 3,
-        'Recetas': 3,
-        'Audiovisual': 3,
-        'Libros': 3,
-        'Juegos': 3,
-        'Peques': 3
+        'Recetas': 8,
+        'Audiovisual': 9,
+        'Libros': 10,
+        'Juegos': 11,
+        'Peques': 6
     }
 
     var response = {}
