@@ -1,9 +1,9 @@
-# BeTogether AWS
-Backend API for BeTogether.
+# Clapp API
+Backend API for [Clapp](https://github.com/URVSquad/clapp).
 
 ## Context
 This is a [Serverless Framework](https://github.com/serverless/serverless) project implementing
-an API to interface with the BeTogether backend.
+an API to interface with the Clapp backend.
 
 ## Running Locally
 You can clone this project and test the implemented endpoints in your local machine, which will act as the server.
