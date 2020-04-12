@@ -102,6 +102,7 @@ exports.getEventsByUser = async (event, context, callback) => {
 };
 
 exports.postEvent = async (event, context, callback) => {
+  console.log(event)
   var response = {}
   var datetime = new Date().toISOString().slice(0, 19).replace('T', ' ');
 
@@ -110,18 +111,18 @@ exports.postEvent = async (event, context, callback) => {
 
   var categoryId = {
     'Ejercicio': 3,
-    'Cultura': 3,
-    'Otros': 3,
-    'Peques': 3,
-    'Fiesta': 3
+    'Cultura': 4,
+    'Otros': 5,
+    'Peques': 6,
+    'Fiesta': 7
   }
 
   var sqlItem = `
-    INSERT INTO item(id, title, image, description, category, app_user, creation)
-    VALUES(DEFAULT, ?, ?, ?, ?, ?, ?)
+    INSERT INTO item(id, title, image, description, category, app_user, creation, url)
+    VALUES(DEFAULT, ?, ?, ?, ?, ?, ?, ?)
   `
   var sqlEvent = `
-    INSERT INTO event(i,d event_start, event_end, hashtag) 
+    INSERT INTO event(id, event_start, event_end, hashtag) 
     VALUES(?, ?, ?, ?)
   `
 
@@ -138,7 +139,7 @@ exports.postEvent = async (event, context, callback) => {
 
   try {
     var results = await db.transaction()
-      .query(sqlItem, [request.title, request.image_url, request.description, categoryId[request.category], request.app_user, datetime])
+      .query(sqlItem, [request.title, request.image_url, request.description, categoryId[request.category], request.user, datetime, request.url])
       .query((r) => [sqlEvent, [r.insertId, request.event_start, request.event_end, request.hashtag]])
       .commit();
     await db.end();
