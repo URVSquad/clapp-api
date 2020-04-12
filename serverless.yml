@@ -66,7 +66,7 @@ functions:
     handler: src/functions/activities/activities.getActivitiesByUser
     events:
       - http:
-          path: /activities/category
+          path: /activities/user
           method: get
           cors: true
           request:
