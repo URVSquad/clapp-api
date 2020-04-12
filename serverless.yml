@@ -95,6 +95,17 @@ functions:
             parameters:
               querystrings:
                 user: true
-              
+  postVote:
+    handler: src/functions/events/events.postVote
+    events:
+      - http:
+          path: /activities/{id}/votes
+          method: post
+          cors: true
+          request:
+            parameters:
+              path:
+                id: true
+                      
 plugins:
   - serverless-offline

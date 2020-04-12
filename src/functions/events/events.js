@@ -158,3 +158,29 @@ exports.postEvent = async (event, context, callback) => {
     'body': JSON.stringify(response)
   };
 };
+
+exports.postVote = async (event, context, callback) => {
+  var response = {}
+  var sql = `
+    UPDATE item
+    SET votes = votes + 1
+    WHERE item.id = (?);
+  `
+
+  try {
+      var results = await db.query(sql, [event.pathParameters['id']]);
+      await db.end();
+
+      response.status = 200
+      response.activities = results
+  }
+  catch(err) {
+    console.log(err)
+    response.status = 500
+  }
+
+  return {
+      'statusCode': response.status,
+      'body': JSON.stringify(response)
+  };
+};
