@@ -15,7 +15,7 @@ exports.postsignup = async (event, context, callback) => {
         is_enterprise = true;
         let website = event.request.userAttributes['website'];
         let description = event.request.userAttributes['custom:description'];
-        let nif = event.request.userAttributes['custom:nig'];
+        let nif = event.request.userAttributes['custom:nif'];
         let results = await db.transaction()
         .query('INSERT INTO app_user (id, name, website, nif, description, is_enterprise, email, username) VALUES(?, ?, ?, ?, ?, ?, ?, ?)', [user_id, name, website, nif, description, is_enterprise, email, username])
         .rollback(e => {

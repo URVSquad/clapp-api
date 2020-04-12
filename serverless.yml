@@ -27,7 +27,7 @@ functions:
           method: post
           cors: true
           authorizer:
-            arn: arn:aws:cognito-idp:eu-west-2:362908361943:userpool/eu-west-2_G1chdG3tq=
+            arn: arn:aws:cognito-idp:eu-west-2:362908361943:userpool/eu-west-2_F2VD3BBho
   getEvents:
     handler: src/functions/events/events.getEvents
     events:
@@ -43,7 +43,7 @@ functions:
           method: post
           cors: true
           authorizer:
-            arn: arn:aws:cognito-idp:eu-west-2:362908361943:userpool/eu-west-2_G1chdG3tq
+            arn: arn:aws:cognito-idp:eu-west-2:362908361943:userpool/eu-west-2_F2VD3BBho
   postSignUp:
     handler: src/functions/pool/post-signup.postsignup
     events:
