@@ -108,27 +108,39 @@ exports.postEvent = async (event, context, callback) => {
   var request = JSON.parse(event.body)
   var response = {}
 
+  var categoryId = {
+    'eventCategories.Ejercicio': 3,
+    'activityCategories.Cocinitas': 3,
+    'activityCategories.Cultura': 3,
+    'activityCategories.Peques': 3,
+    'activityCategories.Fiesta': 3,
+    'activityCategories.Otros': 3
+}
+
   var sqlItem = `
     INSERT INTO item(id, title, image, description, category, app_user, creation)
     VALUES(DEFAULT, ?, ?, ?, ?, ?, ?)
   `
   var sqlEvent = `
-    INSERT INTO event(id, event_start, event_end) 
-    VALUES(?, ?, ?)
+    INSERT INTO event(id, event_start, event_end, hashtag) 
+    VALUES(?, ?, ?, ?)
   `
 
   var imageResponse = await uploadImage(request.image)
+  console.log(imageResponse)
   if (imageResponse.url) {
-      request.image_url = imageResponse.url
+    console.log('EXIT IMAGE')
+    request.image_url = imageResponse.url
   } else {
-      request.image_url = null
+    console.log('NO EXIT IMAGE')
+    request.image_url = ''
   }
   delete request.image;
 
   try {
     var results = await db.transaction()
-      .query(sqlItem, [request.title, request.image_url, request.description, request.category, request.app_user, datetime])
-      .query((r) => [sqlEvent, [r.insertId, request.event_start, request.event_end]])
+      .query(sqlItem, [request.title, request.image_url, request.description, categoryId[request.category], request.app_user, datetime])
+      .query((r) => [sqlEvent, [r.insertId, request.event_start, request.event_end, request.hashtag]])
       .commit();
     await db.end();
 
@@ -138,6 +150,7 @@ exports.postEvent = async (event, context, callback) => {
     response.event = request
   }
   catch(err) {
+    console.log(err)
     response.status = 500
   }
 

@@ -147,6 +147,17 @@ exports.postActivity = async (event, context, callback) => {
     var datetime = new Date().toISOString().slice(0, 19).replace('T', ' ');
 
     var request = JSON.parse(event.body)
+    console.log(request)
+
+    var categoryId = {
+        'activityCategories.Ejercicio': 3,
+        'activityCategories.Recetas': 3,
+        'activityCategories.Audiovisual': 3,
+        'activityCategories.Libros': 3,
+        'activityCategories.Juegos': 3,
+        'activityCategories.Peques': 3,
+    }
+
     var response = {}
 
     var sqlItem = `
@@ -158,16 +169,19 @@ exports.postActivity = async (event, context, callback) => {
     `
 
     var imageResponse = await uploadImage(request.image)
+    console.log(imageResponse)
     if (imageResponse.url) {
+        console.log('EXIT IMAGE')
         request.image_url = imageResponse.url
     } else {
-        request.image_url = null
+        console.log('NO EXIT IMAGE')
+        request.image_url = ''
     }
     delete request.image;
  
     try {
         var results = await db.transaction()
-            .query(sqlItem, [request.title, request.image_url, request.description, request.category, request.app_user, datetime])
+            .query(sqlItem, [request.title, request.image_url, request.description, categoryId[request.category], request.user, datetime])
             .query((r) => [sqlActivity, r.insertId])
             .commit();
         await db.end();
@@ -179,6 +193,7 @@ exports.postActivity = async (event, context, callback) => {
         response.activity = request
     } 
     catch(err) {
+        console.log(err)
         response.status = 500
     }
         
